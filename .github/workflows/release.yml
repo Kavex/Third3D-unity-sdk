@@ -7,14 +7,7 @@ jobs:
     release:
         permissions:
           contents: write
-          pages: write
-          id-token: write
-        concurrency:
-          group: "pages"
-          cancel-in-progress: false
-        environment:
-          name: github-pages
-          url: ${{steps.deployment.outputs.page_url}}
+
         runs-on: ubuntu-latest
 
         steps:
@@ -34,15 +27,13 @@ jobs:
               with:
                 token: ${{ secrets.GITHUB_TOKEN }}
                 name: Third SDK Repo
-                author: third3d.com
+                author: Third
                 url: https://third3d.github.io/unity-sdk/index.json
                 id: com.third3d.vcc
                 package: com.third3d.sdk
             - run: |
                 mkdir _site
-                echo '${{steps.index.outputs.index}}' > _site/index.json
-            - uses: actions/configure-pages@v5
-            - uses: actions/upload-pages-artifact@v3
-            - name: Deploy to GitHub Pages
-              id: deployment
-              uses: actions/deploy-pages@v4
+                echo '${{steps.index.outputs.index}}' > index.json
+            - run: gh release upload v${version} index.json
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
