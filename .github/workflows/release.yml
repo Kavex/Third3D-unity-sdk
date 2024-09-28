@@ -1,0 +1,36 @@
+name: 'SDK Release'
+
+on:
+    workflow_dispatch:
+
+jobs:
+    release:
+        permissions:
+            contents: write
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+            - name: Get release version
+              run: |
+                version=$(cat com.third3d.sdk/package.json | jq -r .version)
+                echo "version=$version" >> "$GITHUB_ENV"
+            - name: Create zip
+              run: cd com.third3d.sdk && zip -r ../com.third3d.sdk-v${version}.zip .
+            - name: Release
+              run: gh release create v${version} com.third3d.sdk/package.json com.third3d.sdk-v${version}.zip
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - uses: ./.github/actions/vcc-index
+              id: index
+              with:
+                token: ${{ secrets.GITHUB_TOKEN }}
+                name: Third SDK Repo
+                author: third3d.com
+                url: https://github.com/third3d/unity-sdk/releases/latest/download/index.json
+                id: com.third3d.vcc
+                package: com.third3d.sdk
+            - run: echo '${{steps.index.outputs.index}}' > index.json
+            - run: gh release upload v${version} index.json
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

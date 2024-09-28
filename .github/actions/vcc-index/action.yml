@@ -1,0 +1,26 @@
+name: 'Build VCC index'
+description: 'Build VCC index'
+
+
+# Define your inputs here.
+inputs:
+  token:
+    required: true
+  name:
+    required: true
+  author:
+    required: true
+  url:
+    required: true
+  id:
+    required: true
+  package:
+    required: true
+
+outputs:
+  index:
+    description: Generated index.json Package Listing
+
+runs:
+  using: node20
+  main: dist/index.js
