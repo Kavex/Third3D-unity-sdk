@@ -28,7 +28,7 @@ jobs:
               with:
                 token: ${{ secrets.GITHUB_TOKEN }}
                 name: Third SDK Repo
-                author: Third
+                author: third3d.com
                 url: https://github.com/third3d/unity-sdk/releases/latest/download/index.json
                 id: com.third3d.vcc
                 package: com.third3d.sdk
