@@ -22,6 +22,7 @@ jobs:
               run: gh release create v${version} com.third3d.sdk/package.json com.third3d.sdk-v${version}.zip
               env:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - run: sleep 5
             - uses: ./.github/actions/vcc-index
               id: index
               with:
