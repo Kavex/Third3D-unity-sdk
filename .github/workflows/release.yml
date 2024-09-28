@@ -32,7 +32,6 @@ jobs:
                 id: com.third3d.vcc
                 package: com.third3d.sdk
             - run: |
-                mkdir _site
                 echo '${{steps.index.outputs.index}}' > index.json
             - run: gh release upload v${version} index.json
               env:
