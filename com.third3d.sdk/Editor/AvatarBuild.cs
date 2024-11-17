@@ -61,8 +61,10 @@ namespace Third
                         $"Avatar uncompressed size is too large for the target platform. {ValidationHelpers.FormatFileSize(fileSizeUncompressed)} > {ValidationHelpers.FormatFileSize(limit)}");
                 }
 
+                // Build tools like Modular Avatar seem to reset the PipelineManager.blueprintId. Instead read the blueprint id from the EditorPref that the VRC SDK writes to. 
+                var blueprintId = EditorPrefs.GetString("lastBuiltAssetBundleBlueprintID");
+                if (string.IsNullOrEmpty(blueprintId)) throw new Exception("Blueprint ID was not set during build");
 
-                var blueprintId = avatar.GetComponent<PipelineManager>().blueprintId;
                 EditorUtility.DisplayProgressBar("Third Avatar Archive", "Creating Archive...", 0.1f);
 
                 string platform;
