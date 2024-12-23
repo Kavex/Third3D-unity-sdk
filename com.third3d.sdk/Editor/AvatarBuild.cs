@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using UnityEditor;
@@ -45,6 +46,16 @@ namespace Third
                 var stats = new AvatarPerformanceStats(mobile);
                 AvatarPerformance.CalculatePerformanceStats(avatar.name, avatar, stats, mobile);
                 var rating = stats.GetPerformanceRatingForCategory(AvatarPerformanceCategory.Overall);
+
+                var pm = avatar.GetComponent<PipelineManager>();
+                if (!pm) {
+                    pm = avatar.AddComponent<PipelineManager>(); // should never happen, but just in case
+                }
+                var validbpId = pm.blueprintId != null && Regex.IsMatch(pm.blueprintId,  @"^avtr_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
+                if (!validbpId) {
+                    Debug.Log("Blueprint ID invalid. Generating new Blueprint ID");
+                    pm.AssignId();
+                }
 
                 var bundlePath = await BuildAvatar(avatar);
                 if (ValidationEditorHelpers.CheckIfAssetBundleFileTooLarge(ContentType.Avatar, bundlePath, out int fileSize, mobile))
