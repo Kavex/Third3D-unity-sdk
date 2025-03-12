@@ -146,8 +146,18 @@ namespace Third
                 Debug.Log("Blueprint ID invalid. Generating new Blueprint ID");
                 pm.AssignId();
             }
+            var bpIdBeforeBuild = pm.blueprintId;
 
             var bundlePath = await BuildAvatar(avatar);
+
+            // Sometimes, something is deleting the blueprint ID? Make sure it is the same as before build.
+            var bpIdAfterBuild = pm.blueprintId;
+            if (bpIdAfterBuild != bpIdBeforeBuild) throw new Exception("Blueprint ID changed during build. Try building again, while logged in to the VRChat SDK.");
+
+            // Blueprint ID has been checked before and after build.
+            // Should be safe to use now.
+            var blueprintId = pm.blueprintId;
+
             if (ValidationEditorHelpers.CheckIfAssetBundleFileTooLarge(ContentType.Avatar, bundlePath, out int fileSize, mobile))
             {
                 var limit = ValidationHelpers.GetAssetBundleSizeLimit(ContentType.Avatar, mobile);
@@ -162,9 +172,7 @@ namespace Third
                     $"Avatar uncompressed size is too large for the target platform. {ValidationHelpers.FormatFileSize(fileSizeUncompressed)} > {ValidationHelpers.FormatFileSize(limit)}");
             }
 
-            // Build tools like Modular Avatar seem to reset the PipelineManager.blueprintId. Instead read the blueprint id from the EditorPref that the VRC SDK writes to. 
-            var blueprintId = EditorPrefs.GetString("lastBuiltAssetBundleBlueprintID");
-            if (string.IsNullOrEmpty(blueprintId)) throw new Exception("Blueprint ID was not set during build");
+
 
             EditorUtility.DisplayProgressBar("Third Avatar Archive", "Creating Archive...", 0.1f);
 
