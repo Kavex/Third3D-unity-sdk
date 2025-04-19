@@ -1,6 +1,6 @@
 # Third Unity SDK
 
-Build Third Avatars Bundles (.3b) to use with [Third Uploader](https://github.com/third3d/uploader) and [third3d.com](https://third3d.com/).
+Build Third Avatars Bundles (.3b) to use with [Third Uploader](https://github.com/Kavex/Third3D-unity-sdk)
 
 ## Install
 
