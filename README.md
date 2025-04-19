@@ -4,11 +4,7 @@ Build Third Avatars Bundles (.3b) to use with https://github.com/Kavex/VRChat-3b
 
 ## Install
 
-1. Open VRChat Creator Companion
-2. **Settings** -> **Packages** -> **Add Repository**
-3. Insert index.json https://github.com/Kavex/VRChat-3b-unity-sdk into **Repository Listing URL** and click on **Add**
-4. Navigate to **Projects** and click on **Manage Projects**
-5. Find **Third SDK** and click on **+**
+Add com.third3d.sdk to `{Unity project path}/Packages/`
 
 ## Build Third Avatar Bundle
 
