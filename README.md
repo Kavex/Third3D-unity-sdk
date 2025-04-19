@@ -1,12 +1,12 @@
 # Third Unity SDK
 
-Build Third Avatars Bundles (.3b) to use with [Third Uploader](https://github.com/Kavex/Third3D-unity-sdk)
+Build Third Avatars Bundles (.3b) to use with https://github.com/Kavex/VRChat-3b-unity-sdk and host to upload using https://github.com/Kavex/VRChat-3b-uploader
 
 ## Install
 
 1. Open VRChat Creator Companion
 2. **Settings** -> **Packages** -> **Add Repository**
-3. Insert [https://github.com/third3d/unity-sdk/releases/latest/download/index.json](https://github.com/third3d/unity-sdk/releases/latest/download/index.json) into **Repository Listing URL** and click on **Add**
+3. Insert index.json https://github.com/Kavex/VRChat-3b-unity-sdk into **Repository Listing URL** and click on **Add**
 4. Navigate to **Projects** and click on **Manage Projects**
 5. Find **Third SDK** and click on **+**
 
